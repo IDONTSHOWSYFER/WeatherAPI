@@ -74,3 +74,25 @@ app.post("/cities", (req, res) => {
 
     res.status(201).json({ message: "Ville ajoutée", city: newCity});
 });
+
+app.put("/cities/:zipCode", (req, res) => {
+    const cities = getCities();
+    const zip = String(req.params.zipCode);
+    const cityIndex = cities.find((c: { zipCode: string; }) => c.zipCode === zip);
+
+    if (cityIndex === -1) {
+        return res.status(404).json({ error: "Ville non trouvée"});
+    }
+
+    const {name} = req.body;
+
+    if (!name) {
+        res.status(400).json({ error: "Champs manquants"})
+    }
+
+    cities[cityIndex] = {name};
+    saveCities(cities);
+
+    res.status(200).json({ message: "Nom de la ville mise à jour", city: cities[cityIndex]});
+});
+

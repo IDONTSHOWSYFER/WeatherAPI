@@ -55,4 +55,21 @@ describe("API Weather", () => {
         expect(res.body.city).toMatchObject(city);
     });
 
+    it("PUT /cities/:zipCode => Change le nom d'une ville", async () => {
+    const create = await request(app).post("/cities").send({
+        zipCode: "21200",
+        name: "Beaune"
+    });
+
+    const zipCode = create.body.city.zipCode;
+
+    const res = await request(app)
+      .put(`/cities/${zipCode}`)
+      .send({
+        name: "Bonne"
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.city.name).toBe("Bonne");
+    })
 })
