@@ -24,3 +24,19 @@ app.get("/cities", (req, res) => {
     const cities = getCities();
     res.json(cities);
 })
+
+app.get("/cities/:zipCode", (req, res) => {
+    try {
+        const cities = getCities();
+        const zip = String(req.params.zipCode);
+        const city = cities.find((c: { zipCode: string; }) => c.zipCode === zip);
+
+        if(!city) {
+            return res.status(404).json({ error: "Ville non trouvée"});
+        }
+
+        res.json(city);
+    } catch (err) {
+        res.status(500).json({ error: "Erreur interne" });
+    }
+});
