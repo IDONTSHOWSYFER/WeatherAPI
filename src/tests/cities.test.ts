@@ -24,7 +24,7 @@ describe("API Weather", () => {
         expect(Array.isArray(res.body)).toBe(true);
     })
 
-    it("GET /cities/:zip-code => récupère une ville spécifique", async () => {
+    it("GET /cities/:zipCode => récupère une ville spécifique", async () => {
         const create = await request(app).post("/cities").send({
             zipCode: "02000",
             name: "Aisne"
@@ -39,5 +39,20 @@ describe("API Weather", () => {
             zipCode,
             name: "Aisne"
         });
-  });
+    });
+
+    it("POST /cities => crée une ville", async () => {
+        const city = {
+            zipCode: "21200",
+            name: "Beaune"
+        };
+
+        const res = await request(app)
+            .post("/cities")
+            .send(city)
+
+        expect(res.status).toBe(201);
+        expect(res.body.city).toMatchObject(city);
+    });
+
 })
