@@ -8,5 +8,11 @@
   "keywords": [],
   "author": "Noxie & Syfer",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pino": "^10.1.0",
+    "supertest": "^7.1.4",
+    "vitest": "^4.0.7"
+  }
 }
