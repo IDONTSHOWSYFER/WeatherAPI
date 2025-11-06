@@ -96,3 +96,17 @@ app.put("/cities/:zipCode", (req, res) => {
     res.status(200).json({ message: "Nom de la ville mise à jour", city: cities[cityIndex]});
 });
 
+app.delete("/cities/:zipCode", (req, res) => {
+    const cities = getCities();
+    const zip = String(req.params.zipCode);
+    const city = cities.find((c: { zipCode: string; }) => c.zipCode === zip);
+
+    if (city === -1) {
+        return res.status(404).json({ error: "Ville non trouvée"})
+    }
+
+    const removed = cities.splice(city, 1)[0];
+    saveCities(cities);
+
+    res.status(200).json({message: "Ville supprimée", city: removed})
+})

@@ -72,4 +72,19 @@ describe("API Weather", () => {
     expect(res.status).toBe(200);
     expect(res.body.city.name).toBe("Bonne");
     })
+
+    it("DELETE /contacts/:id => supprime un contact", async () => {
+    const create = await request(app).post("/cities").send({
+        zipCode: "93000",
+        name: "Paris"
+    });
+
+    const zipCode = create.body.city.zipCode;
+
+    const res = await request(app).delete(`/cities/${zipCode}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toBe("Ville supprimée");
+  });
 })
+
