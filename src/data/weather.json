@@ -1,0 +1,37 @@
+[
+    {
+        "zipCode": "01000",
+        "name" : "Ain",
+        "weather": "neige"
+    },
+    {
+        "zipCode": "01000",
+        "name" : "Ain",
+        "weather": "beau"
+    },
+    {
+        "zipCode": "01000",
+        "name" : "Ain",
+        "weather": "pluie"
+    },
+    {
+        "zipCode": "01000",
+        "name" : "Ain",
+        "weather": "pluie"
+    },
+    {
+        "zipCode": "01000",
+        "name" : "Ain",
+        "weather": "pluie"
+    },
+        {
+        "zipCode": "94000",
+        "name" : "Paris",
+        "weather": "beau"
+    },
+        {
+        "zipCode": "02000",
+        "name" : "Aisne",
+        "weather": "beau"
+    }
+]

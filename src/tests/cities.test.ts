@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach, afterAll, afterEach } from "vitest";
 import request from "supertest";
 import { writeFileSync } from "fs";
-import { app } from "../index.js";
+import { app } from "../server.ts";
 
 const DATA_PATH = process.env.NODE_ENV === "test"
-  ? "./src/cities.test.json"
-  : "./src/cities.json";
+  ? "./src/data/cities.test.json"
+  : "./src/data/cities.json";
 
   
 beforeEach(() => {

@@ -1,14 +1,16 @@
 import express from "express";
 import * as fs from "node:fs";
-import { get } from "node:http";
+import { Router } from "express";
 
-export const app = express()
+//export const app = express()
+
+const router = Router()
 
 const DATA_PATH = process.env.NODE_ENV === "test"
-  ? "./src/cities.test.json"
-  : "./src/cities.json";
+  ? "./src/data/cities.test.json"
+  : "./src/data/cities.json";
 
-app.use(express.json());
+//app.use(express.json());
 
 
 function getCities() {
@@ -19,18 +21,18 @@ function saveCities(data: any) {
     fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
 }
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
     res.json({
         message: "Bienvenue sur WeatherAPI !"
     })
 });
 
-app.get("/cities", (req, res) => {
+router.get("/cities", (req, res) => {
     const cities = getCities();
     res.json(cities);
 });
 
-app.get("/cities/:zipCode", (req, res) => {
+router.get("/cities/:zipCode", (req, res) => {
     try {
         const cities = getCities();
         const zip = String(req.params.zipCode);
@@ -46,7 +48,7 @@ app.get("/cities/:zipCode", (req, res) => {
     }
 });
 
-app.post("/cities", (req, res) => {
+router.post("/cities", (req, res) => {
     const cities = getCities();
     const {zipCode, name} = req.body;
 
@@ -75,7 +77,7 @@ app.post("/cities", (req, res) => {
     res.status(201).json({ message: "Ville ajoutée", city: newCity});
 });
 
-app.put("/cities/:zipCode", (req, res) => {
+router.put("/cities/:zipCode", (req, res) => {
     const cities = getCities();
     const zip = String(req.params.zipCode);
     const cityIndex = cities.find((c: { zipCode: string; }) => c.zipCode === zip);
@@ -96,7 +98,7 @@ app.put("/cities/:zipCode", (req, res) => {
     res.status(200).json({ message: "Nom de la ville mise à jour", city: cities[cityIndex]});
 });
 
-app.delete("/cities/:zipCode", (req, res) => {
+router.delete("/cities/:zipCode", (req, res) => {
     const cities = getCities();
     const zip = String(req.params.zipCode);
     const city = cities.find((c: { zipCode: string; }) => c.zipCode === zip);
@@ -110,3 +112,5 @@ app.delete("/cities/:zipCode", (req, res) => {
 
     res.status(200).json({message: "Ville supprimée", city: removed})
 })
+
+export default router;
