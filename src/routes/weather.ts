@@ -13,7 +13,7 @@ interface City {
 interface WeatherReport {
   id: number;
   zipCode: string;
-  townName: string;
+  name: string;
   weather: WeatherType;
 }
 
@@ -61,6 +61,35 @@ router.get("/:zipCode/weather", (req: Request, res: Response): void => {
   }
   const weather = dominantWeather(reports);
   res.status(200).json({ zipCode: city.zipCode, name: city.name, weather });
+});
+
+router.post("/:zipCode/weather", (req: Request, res: Response): void => {
+  const zip = req.params.zipCode;
+  const { zipCode, weather } = req.body as {
+    zipCode?: string;
+    weather?: WeatherType;
+  };
+
+  const allowed: WeatherType[] = ["pluie", "beau", "neige"];
+
+  if (!zipCode || String(zipCode) !== zip || !allowed.includes(weather as WeatherType)) {
+    res.status(400).json({ error: "Requête invalide" });
+    return;
+  }
+
+  const city = getCities().find((c) => c.zipCode === zip);
+  if (!city) {
+    res.status(404).json({ error: "Ville non trouvée" });
+    return;
+  }
+
+  const list = getWeathers();
+  const nextId = list.length ? Math.max(...list.map((w) => w.id)) + 1 : 1;
+
+  list.push({ id: nextId, zipCode, name: city.name, weather: weather as WeatherType });
+  saveWeathers(list);
+
+  res.status(201).json({message: "Bulletin météo ajouté :", weather: weather,  id: nextId });
 });
 
 export default router;
