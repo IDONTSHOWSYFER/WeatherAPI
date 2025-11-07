@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
     res.json({
         message: "Bienvenue sur WeatherAPI !"
     })
-});
+}); 
 
 router.get("/cities", (req, res) => {
     const cities = getCities();

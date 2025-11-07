@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "zipCode": "01000",
         "name" : "Ain",
         "weather": "neige"

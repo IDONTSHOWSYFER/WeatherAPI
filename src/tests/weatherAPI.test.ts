@@ -116,4 +116,28 @@ describe("API Weather", () => {
     expect(res.body.weather).toBe("beau");
     expect(res.body.message).toBe("Bulletin météo ajouté :");
   })
+
+it("DELETE /cities/:zipCode/weather/:id => supprime un bulletin météo", async () => {
+    await request(app).post("/cities").send({
+      zipCode: "21200",
+      name: "Beaune"
+    });
+
+    const createWeather = await request(app)
+      .post("/cities/21200/weather")
+      .send({ zipCode: "21200", weather: "neige" });
+
+    expect(createWeather.status).toBe(201);
+    const id = createWeather.body.id;
+    expect(typeof id).toBe("number");
+
+    const del = await request(app).delete(`/cities/21200/weather/${id}`);
+
+    expect(del.status).toBe(200);
+    expect(del.body).toEqual({});
+
+    const res = await request(app).get(`/cities/21200/weather`);
+    expect(res.status).toBe(404);
+    expect(res.body.error).toBe("Aucun bulletin pour cette ville");
+  });
 });

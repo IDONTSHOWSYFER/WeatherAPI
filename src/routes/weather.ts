@@ -63,6 +63,22 @@ router.get("/:zipCode/weather", (req: Request, res: Response): void => {
   res.status(200).json({ zipCode: city.zipCode, name: city.name, weather });
 });
 
+router.get("/weather", (_req: Request, res: Response): void => {
+  const weathers = getWeathers();
+  if (weathers.length === 0) {
+    res.status(404).json({ error: "Aucun bulletin météo trouvé" });
+    return;
+  }
+
+  const reports = weathers.map((w) => ({
+    zipCode: w.zipCode,
+    townName: w.name,
+    weather: w.weather,
+  }));
+
+  res.status(200).json(reports);
+});
+
 router.post("/:zipCode/weather", (req: Request, res: Response): void => {
   const zip = req.params.zipCode;
   const { zipCode, weather } = req.body as {
@@ -90,6 +106,27 @@ router.post("/:zipCode/weather", (req: Request, res: Response): void => {
   saveWeathers(list);
 
   res.status(201).json({message: "Bulletin météo ajouté :", weather: weather,  id: nextId });
+});
+
+router.delete("/:zipCode/weather/:id", (req: Request, res: Response): void => {
+  const id = Number(req.params.id);
+  if (isNaN(id)) {
+    res.status(400).json({ error: "ID invalide" });
+    return;
+  }
+
+  const list = getWeathers();
+  const index = list.findIndex((w) => w.id === id);
+
+  if (index === -1) {
+    res.status(404).json({ error: "Bulletin météo non trouvé" });
+    return;
+  }
+
+  list.splice(index, 1);
+  saveWeathers(list);
+
+  res.status(200).json({});
 });
 
 export default router;
