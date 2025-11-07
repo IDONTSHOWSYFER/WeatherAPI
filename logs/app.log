@@ -1,0 +1,7 @@
+{"level":30,"time":"2025-11-07T11:18:18.561Z","pid":24428,"hostname":"LaMachine","method":"GET","url":"/","status":200,"duration":6}
+{"level":30,"time":"2025-11-07T11:18:21.118Z","pid":24428,"hostname":"LaMachine","method":"GET","url":"/weather","status":404,"duration":2}
+{"level":30,"time":"2025-11-07T11:18:28.323Z","pid":24428,"hostname":"LaMachine","method":"GET","url":"/cities","status":304,"duration":2}
+{"level":30,"time":"2025-11-07T11:18:44.265Z","pid":24428,"hostname":"LaMachine","method":"GET","url":"/weather","status":404,"duration":1}
+{"level":30,"time":"2025-11-07T11:18:51.733Z","pid":24428,"hostname":"LaMachine","method":"GET","url":"/cities","status":304,"duration":1}
+{"level":30,"time":"2025-11-07T11:18:55.547Z","pid":24428,"hostname":"LaMachine","method":"GET","url":"/cities/01000/","status":304,"duration":1}
+{"level":30,"time":"2025-11-07T11:18:57.689Z","pid":24428,"hostname":"LaMachine","method":"GET","url":"/cities/01000/weather","status":304,"duration":3}
