@@ -1,0 +1,43 @@
+### Voici le http file qui montre tous les endpoints qui ont étés configurés dans l'API weather
+@baseUrl = http://localhost:3000
+
+### url de base
+GET {{baseUrl}}/
+
+### Renvoie les cities
+GET {{baseUrl}}/cities
+
+### Ajoute une ville
+POST {{baseUrl}}/cities
+Content-Type: application/json
+
+{
+  "zipCode": "75000",
+  "name": "Paris"
+}
+
+### Renvoie la ville avec le zipCode 75000
+GET {{baseUrl}}/cities/75000
+
+### Modifie la ville avec le zipCode 75000
+PUT {{baseUrl}}/cities/75000
+Content-Type: application/json
+
+{
+  "name": "Paris Centre"
+}
+
+### Ajoute un bulletin météo sur le zipCode 75000
+POST {{baseUrl}}/cities/75000/weather
+Content-Type: application/json
+
+{
+  "zipCode": "75000",
+  "weather": "beau"
+}
+
+### Renvoie les bulletins météo de la ville avec le zipCode 75000
+GET {{baseUrl}}/cities/75000/weather
+
+### Supprime une ville avec le zipCode 75000
+DELETE {{baseUrl}}/cities/75000
