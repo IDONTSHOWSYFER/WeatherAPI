@@ -2,16 +2,11 @@ import express from "express";
 import * as fs from "node:fs";
 import { Router } from "express";
 
-//export const app = express()
-
 const router = Router()
 
 const DATA_PATH = process.env.NODE_ENV === "test"
   ? "./src/data/cities.test.json"
   : "./src/data/cities.json";
-
-//app.use(express.json());
-
 
 function getCities() {
     return JSON.parse(fs.readFileSync(DATA_PATH, "utf-8"))

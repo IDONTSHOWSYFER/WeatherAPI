@@ -2,5 +2,13 @@
     {
         "zipCode": "01000",
         "name": "Ain"
+    },
+    {
+        "zipCode": "94000",
+        "name": "Paris"
+    },
+    {
+        "zipCode": "02000",
+        "name" : "Aisne"
     }
 ]

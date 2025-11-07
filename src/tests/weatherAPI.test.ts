@@ -3,17 +3,23 @@ import request from "supertest";
 import { writeFileSync } from "fs";
 import { app } from "../server.ts";
 
-const DATA_PATH = process.env.NODE_ENV === "test"
+const CITIES_PATH = process.env.NODE_ENV === "test"
   ? "./src/data/cities.test.json"
   : "./src/data/cities.json";
 
+const WEATHER_PATH = process.env.NODE_ENV === "test"
+  ? "./src/data/weather.test.json"
+  : "./src/data/weather.json";
+
   
 beforeEach(() => {
-  writeFileSync(DATA_PATH, JSON.stringify([], null, 2));
+  writeFileSync(CITIES_PATH, JSON.stringify([], null, 2));
+  writeFileSync(WEATHER_PATH, JSON.stringify([], null, 2));
 });
 
 afterEach(() => {
-  writeFileSync(DATA_PATH, JSON.stringify([], null, 2))
+  writeFileSync(CITIES_PATH, JSON.stringify([], null, 2));
+  writeFileSync(CITIES_PATH, JSON.stringify([], null, 2));
 })
 
 describe("API Weather", () => {
@@ -73,7 +79,7 @@ describe("API Weather", () => {
     expect(res.body.city.name).toBe("Bonne");
     })
 
-    it("DELETE /contacts/:id => supprime un contact", async () => {
+    it("DELETE /cities/:zipCode => supprime un contact", async () => {
     const create = await request(app).post("/cities").send({
         zipCode: "93000",
         name: "Paris"
@@ -86,5 +92,29 @@ describe("API Weather", () => {
     expect(res.status).toBe(200);
     expect(res.body.message).toBe("Ville supprimée");
   });
+
+  it("GET /cities/:zipCode/weather => retourne la météo la plus valuable d'une ville", async () => {
+        const createCity = await request(app).post("/cities").send({
+            zipCode: "02000",
+            name: "Aisne"
+        });
+
+        const createWeather = await request(app).post("/cities/:zipCode/weather").send({
+          zipCode: "94000",
+          name : "Paris",
+          weather: "beau"
+        })
+
+        const zipCode = createCity.body.city.zipCode;
+
+        const res = await request(app).get(`/cities/${zipCode}/weather`);
+
+        expect(res.status).toBe(200);
+        expect(res.body).toMatchObject({
+            zipCode,
+            name: "Paris",
+            weather: "beau"
+        });
+  })
 })
 

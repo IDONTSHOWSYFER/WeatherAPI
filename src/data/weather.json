@@ -24,14 +24,24 @@
         "name" : "Ain",
         "weather": "pluie"
     },
-        {
+    {
+        "zipCode": "94000",
+        "name" : "Paris",
+        "weather": "beau"
+    },
+    {
+        "zipCode": "02000",
+        "name" : "Aisne",
+        "weather": "beau"
+    },
+    {
         "zipCode": "94000",
         "name" : "Paris",
         "weather": "beau"
     },
         {
-        "zipCode": "02000",
-        "name" : "Aisne",
-        "weather": "beau"
+        "zipCode": "94000",
+        "name" : "Paris",
+        "weather": "pluie"
     }
 ]
